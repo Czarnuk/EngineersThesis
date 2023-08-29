@@ -1,0 +1,23 @@
+<div class="container mt-5 mb-5">
+    <h1 style="text-align: center;">Find a developer</h1>
+    <div class="row justify-content-center">
+        <div class="row col-5">
+            <form class="d-flex justify-content-center">
+                <input #filter class="form-control me-sm-2" type="search" placeholder="Filter by name">
+                <button (click)="filterResults(filter.value)" class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2" *ngFor="let member of filteredMembers">
+        <app-member-card [member]="member"></app-member-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2" *ngFor="let member of members$ | async">
+        <app-member-card [member]="member"></app-member-card>
+    </div>
+</div>

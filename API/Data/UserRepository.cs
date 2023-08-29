@@ -17,11 +17,11 @@ namespace API.Data
             _context = context;
         }
 
-        public async Task<AppUserDto> GetUserAsync(string username)
+        public async Task<MemberDto> GetMemberAsync(string username)
         {
             return await _context.Users
                 .Where(x => x.UserName == username)
-                .ProjectTo<AppUserDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
 
@@ -44,11 +44,11 @@ namespace API.Data
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<AppUserDto>> GetUsersDtoAsync()
+        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
             return await _context.Users
-            .Include(p => p.Photos).ProjectTo<AppUserDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()
