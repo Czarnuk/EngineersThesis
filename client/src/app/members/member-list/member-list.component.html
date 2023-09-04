@@ -1,23 +1,43 @@
-<div class="container mt-5 mb-5">
+<!-- <div class="container mt-5 mb-5">
     <h1 style="text-align: center;">Find a developer</h1>
     <div class="row justify-content-center">
         <div class="row col-5">
             <form class="d-flex justify-content-center">
                 <input #filter class="form-control me-sm-2" type="search" placeholder="Filter by name">
-                <button (click)="filterResults(filter.value)" class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                <button (click)="filterResults(filter.value)" class="btn btn-secondary my-2 my-sm-0"
+                    type="submit">Search</button>
             </form>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-2" *ngFor="let member of filteredMembers">
         <app-member-card [member]="member"></app-member-card>
     </div>
-</div>
+</div> -->
+<div class="container mt-3" *ngIf="userParams">
+    <div class="d-flex justify-content-center">
+            <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMembers()" autocomplete="off">
+                <div class="btn-group">
+                    <button class="btn btn-primary" name="orderBy" (click)="loadMembers()"
+                        [(ngModel)]="userParams.orderBy" btnRadio="lastActive" type="button">Last Active</button>
+                    <button class="btn btn-primary" name="orderBy" (click)="loadMembers()"
+                        [(ngModel)]="userParams.orderBy" btnRadio="created" type="button">Newest members</button>
+                </div>
+            </form>
+    </div>
+    <div class="row">
+        <div class="col-2" *ngFor="let member of members">
+            <app-member-card [member]="member"></app-member-card>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-2" *ngFor="let member of members$ | async">
-        <app-member-card [member]="member"></app-member-card>
+    <div class="d-flex justify-content-center" *ngIf="pagination">
+        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+            [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+        </pagination>
     </div>
 </div>

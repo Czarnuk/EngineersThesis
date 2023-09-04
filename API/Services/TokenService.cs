@@ -19,7 +19,8 @@ namespace API.Services
             //We are defining standard informations about user. This is a set of information about user.
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
             };
             //We are defining security key by which token will be encrypted and type of algorithm used to achieve this
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
