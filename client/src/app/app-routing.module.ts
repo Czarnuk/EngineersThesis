@@ -13,6 +13,8 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,9 +26,10 @@ const routes: Routes = [
       { path: 'certify', component: CertifyListComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'members', component: MemberListComponent },
-      { path: 'members/:username', component: MemberDetailComponent },
+      { path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver} },
       { path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
-      { path: 'lists', component: ListsComponent}
+      { path: 'lists', component: ListsComponent},
+      { path: 'messages', component: MessagesComponent },
     ]
   },
   { path: 'errors', component: TestErrorComponent },
