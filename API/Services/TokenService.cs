@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
@@ -10,11 +11,14 @@ namespace API.Services
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;
-        public TokenService(IConfiguration config)
+        private readonly UserManager<AppUser> _userManager;
+
+        public TokenService(IConfiguration config, UserManager<AppUser> userManager)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            _userManager = userManager;
         }
-        public string CreateToken(AppUser user)
+        public async Task<string> CreateToken(AppUser user)
         {
             //We are defining standard informations about user. This is a set of information about user.
             var claims = new List<Claim>
@@ -22,6 +26,10 @@ namespace API.Services
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             //We are defining security key by which token will be encrypted and type of algorithm used to achieve this
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             //This part will descibe token which will be return
