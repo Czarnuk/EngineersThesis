@@ -25,15 +25,13 @@ namespace API.Extensions
             3.) AddSingleton - This service's instantiated when the application first starts and is never disposed until the application has closed down. it will work in this case but we would have a service hanging around in memory that we're not actually using on a consistent basis. We only need the token service when we need to create a token, and we don't need to have that token service residing in memory for the entire lenght of the application lifetime.
             */
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
-            services.AddScoped<ILikesRepository, LikesRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddSignalR();
             services.AddSingleton<PresenceTracker>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
