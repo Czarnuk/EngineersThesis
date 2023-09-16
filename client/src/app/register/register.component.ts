@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   registerForm: FormGroup = new FormGroup({});
   maxDate: Date = new Date();
-  validationErrors: string[] | undefined;
+  validationErrors: string[] |undefined;
 
   constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder, private router: Router) { }
   ngOnInit(): void {
@@ -45,13 +45,18 @@ export class RegisterComponent implements OnInit {
 
   register() {
     const dob = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
-    const values = {...this.registerForm.value, dateOfBirth: dob};
+    const values = { ...this.registerForm.value, dateOfBirth: dob };
+    this.validationErrors = [];
     this.accountService.register(values).subscribe({
       next: () => {
         this.router.navigateByUrl('/members')
       },
       error: error => {
-          this.validationErrors = error
+        if(Array.isArray(error.error)) {
+          for (let index = 0; index < error.error.length; index++) {
+            this.validationErrors?.push(error.error[index].description);
+          }
+        }
       }
     })
   }
