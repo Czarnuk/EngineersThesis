@@ -13,10 +13,6 @@ namespace API.Extensions
         //IServiceCollection is what we will return. First parameter for AddApplicationServices is what we will extend, we want to use IConfiguration parameter also
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            });
             services.AddCors();
             /*
             We have 3 options about the lifetime of how long do we want this service to be available for.
