@@ -6,6 +6,11 @@
     position: relative
 }
 
+.img-task-wrapper {
+    text-align: center;
+    position: relative
+}
+
 .img-text {
     position: absolute;
     left: 0;

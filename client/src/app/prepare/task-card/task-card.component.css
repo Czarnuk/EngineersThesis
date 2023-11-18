@@ -1,0 +1,20 @@
+.task-card {
+    border: 1px solid;
+    line-height: 60px;
+    border-radius: .5rem;
+    background-color: #111827;
+    margin-bottom: 10px;
+}
+
+.task-card-header{
+    padding: 10px;
+}
+
+.difficulty {
+    color:#32c766;
+}
+
+.task-card-button{
+    align-items: center;
+    text-align: center;
+}

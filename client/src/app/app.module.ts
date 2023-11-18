@@ -35,6 +35,14 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './_services/customRouteReuseStrategy';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { PrepareTaskListComponent } from './prepare/prepare-task-list/prepare-task-list.component';
+import { TaskManagementComponent } from './admin/task-management/task-management.component';
+import { TaskFormComponent } from './_forms/task-form/task-form.component';
+import { TaskCardComponent } from './prepare/task-card/task-card.component';
+import { TaskDetailComponent } from './prepare/task-detail/task-detail.component';
+import { TaskEditComponent } from './prepare/task-edit/task-edit.component';
+import { TaskPhotoEditorComponent } from './prepare/task-photo-editor/task-photo-editor.component';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 @NgModule({
   declarations: [
@@ -61,7 +69,14 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     UserManagementComponent,
     PhotoManagementComponent,
     RolesModalComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PrepareTaskListComponent,
+    TaskManagementComponent,
+    TaskFormComponent,
+    TaskCardComponent,
+    TaskDetailComponent,
+    TaskEditComponent,
+    TaskPhotoEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +85,8 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CodemirrorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

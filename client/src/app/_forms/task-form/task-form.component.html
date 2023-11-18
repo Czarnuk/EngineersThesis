@@ -1,0 +1,149 @@
+
+<div class="container" *ngIf="isAddedMode">
+    <h4>Add task</h4>
+    <div class="col-8">
+        <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
+            <p><strong>Information: </strong>You have made changes. Any unsaved changes will be lost</p>
+        </div>
+    </div>
+    <form class="mb-3" #editForm="ngForm" id="editForm" (ngSubmit)="addTask()">
+        <div class="form-group">
+            <label for="taskName">Task name:</label>
+            <input type="text" class="form-control" id="taskName" [(ngModel)]="model.taskName" name="taskName"
+                #nameInput="ngModel" required>
+            <div [hidden]="nameInput.valid || nameInput.pristine" class="alert alert-danger">
+                Task name is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea rows="4" type="" class="form-control" id="description" [(ngModel)]="model.description"
+                name="description" #descriptionInput="ngModel" required></textarea>
+            <div [hidden]="descriptionInput.valid || descriptionInput.pristine" class="alert alert-danger">
+                Task name is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="difficultyName">Difficulty:</label>
+            <select id="difficultyName" class="form-control" [(ngModel)]="model.difficultyName" name="difficultyName"
+                #difficultyInput="ngModel" required>
+                <option [value]="diffName" *ngFor="let diffName of difficultyName">{{diffName}}</option>
+            </select>
+            <div [hidden]="difficultyInput.valid || difficultyInput.pristine" class="alert alert-danger">
+                Difficulty type is required
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="skill">Skill:</label>
+            <select id="skill" class="form-control" required [(ngModel)]="model.skill" name="skill"
+                #skillInput="ngModel">
+                <option [value]="typeOfSkill" *ngFor="let typeOfSkill of skill">{{typeOfSkill}}</option>
+            </select>
+            <div [hidden]="skillInput.valid || skillInput.pristine" class="alert alert-danger">
+                Skill type is required
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-3">
+                <h3>Add Photos</h3>
+                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                    [uploader]="uploader" class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+                    <i class="fa fa-upload fa-3x"></i>
+                    Drop photos here
+                </div>
+        
+                Multiple
+                <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+        
+                Single
+                <input type="file" ng2FileSelect [uploader]="uploader"/>
+            </div>
+        
+            <div class="col-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+        
+                <h3>Upload queue</h3>
+                <p>Queue length: {{ uploader?.queue?.length }}</p>
+        
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="50%">Name</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of uploader?.queue">
+                            <td><strong>{{ item?.file?.name }}</strong></td>
+                            <td *ngIf="uploader?.options?.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+                <div>
+                    <div>
+                        Queue progress:
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader?.progress + '%' }">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button type="button" class="btn btn-success btn-s" (click)="uploader?.uploadAll()"
+                        [disabled]="!uploader?.getNotUploadedItems()?.length">
+                        <span class="fa fa-upload"></span> Upload all
+                    </button> -->
+                    <button *ngIf="!taskManagementMode" type="button" class="btn btn-warning btn-s" (click)="uploader?.cancelAll()"
+                        [disabled]="!uploader?.isUploading">
+                        <span class="fa fa-ban"></span> Cancel all
+                    </button>
+                    <button type="button" class="btn btn-danger btn-s" (click)="uploader?.clearQueue()"
+                        [disabled]="!uploader?.queue?.length">
+                        <span class="fa fa-trash"></span> Remove all
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success mt-2" type="submit" [disabled]="!editForm.form.valid || (!editForm.form.valid && (photoInQueue$ | async))">Submit</button>
+    </form>
+</div>
+<div class="container" *ngIf="!isAddedMode">
+    <h4>Edit task</h4>
+    <form #editForm="ngForm" id="editForm" (ngSubmit)="updateTask()">
+        <div class="form-group">
+            <label for="taskName">Task name:</label>
+            <input type="text" class="form-control" id="taskName" [(ngModel)]="model.taskName" name="taskName"
+                #nameInput="ngModel" required>
+            <div [hidden]="nameInput.valid || nameInput.pristine" class="alert alert-danger">
+                Task name is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea rows="4" type="" class="form-control" id="description" [(ngModel)]="model.description"
+                name="description" #descriptionInput="ngModel" required></textarea>
+            <div [hidden]="descriptionInput.valid || descriptionInput.pristine" class="alert alert-danger">
+                Task name is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="difficultyName">Difficulty:</label>
+            <select id="difficultyName" class="form-control" [(ngModel)]="model.difficultyName" name="difficultyName"
+                #difficultyInput="ngModel" required>
+                <option [value]="diffName" *ngFor="let diffName of difficultyName">{{diffName}}</option>
+            </select>
+            <div [hidden]="difficultyInput.valid || difficultyInput.pristine" class="alert alert-danger">
+                Difficulty type is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="skill">Skill:</label>
+            <select id="skill" class="form-control" required [(ngModel)]="model.skill" name="skill"
+                #skillInput="ngModel">
+                <option [value]="typeOfSkill" *ngFor="let typeOfSkill of skill">{{typeOfSkill}}</option>
+            </select>
+            <div [hidden]="skillInput.valid || skillInput.pristine" class="alert alert-danger">
+                Skill type is required
+            </div>
+        </div>
+        <button class="btn btn-success mt-2" type="submit" [disabled]="!editForm.form.dirty">Submit</button>
+    </form>
+</div>

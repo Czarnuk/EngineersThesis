@@ -68,6 +68,7 @@ try
     await context.Database.MigrateAsync();
     await Seed.ClearConnections(context);
     await Seed.SeedUsers(userManager, roleManager);
+    await Seed.SeedTasks(context);
 }
 catch (Exception ex)
 {

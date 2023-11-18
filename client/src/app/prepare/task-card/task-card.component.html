@@ -1,0 +1,10 @@
+<div class="d-flex task-card">
+    <div class="col-8 task-card-header">
+        <h4 style="color: #d4e4f9; margin: 0;"><b>{{task?.taskName}}</b></h4>
+        <span class="difficulty">{{task?.difficultyName}}</span>
+    </div>
+    <div class="col-4 task-card-button d-flex justify-content-center">
+        <button routerLink="/tasks/{{task?.id}}" class="btn btn-info">Solve Challenge</button>
+        <button  *appHasRole="['Admin', 'Moderator']" routerLink="/tasks/edit/{{task?.id}}" class="btn btn-danger" style="margin-left: 5px;">Moderate</button>
+    </div>
+</div>
