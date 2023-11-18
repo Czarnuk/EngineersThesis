@@ -1,0 +1,14 @@
+.left-panel {
+    width: calc(35% - 6px);
+    position: relative;
+}
+
+.right-panel {
+    width: calc(65.5% - 6px);
+    margin-left: 10px;
+}
+
+.container-fluid{
+    display: flex;
+    width: 100%;
+}

@@ -1,0 +1,39 @@
+.topic-list {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.topic-card {
+    flex: 0 0 calc(33.33% - 1px);
+    border-right: 1px solid;
+    line-height: 60px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.topic-card:hover {
+    background-color: #39424e;
+}
+
+.dashboard-topics {
+    border: 1px solid !important;
+    border-radius: .5rem;
+    background-color: #111827;
+}
+
+.dashboard-topics .topic-card:nth-child(3n) {
+    border-right: 0;
+}
+
+.topic-item {
+    padding: 0 30px;
+    color: white;
+}
+
+.topic-link {
+    text-decoration: none
+}

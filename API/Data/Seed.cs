@@ -52,5 +52,24 @@ namespace API.Data
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
         }
+
+        public static async Task SeedTasks(DataContext context)
+        {
+            if (await context.Tasks.AnyAsync()) return;
+
+            var sqlTaskData = await File.ReadAllTextAsync("Data/TaskSeedData.json");
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            var sqlTasks = JsonSerializer.Deserialize<List<TaskEntity>>(sqlTaskData, options);
+
+            foreach (var task in sqlTasks)
+            {
+                task.Created = DateTime.SpecifyKind(task.Created, DateTimeKind.Utc);
+                context.Tasks.Add(task);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

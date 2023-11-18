@@ -262,6 +262,61 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("API.Entities.TaskEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DifficultyName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Skill")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Solved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TaskName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("API.Entities.TaskPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TaskEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskEntityId");
+
+                    b.ToTable("TaskPhoto");
+                });
+
             modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
                     b.Property<int>("SourceUserId")
@@ -421,6 +476,17 @@ namespace API.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("API.Entities.TaskPhoto", b =>
+                {
+                    b.HasOne("API.Entities.TaskEntity", "Task")
+                        .WithMany("Photos")
+                        .HasForeignKey("TaskEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "SourceUser")
@@ -499,6 +565,11 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Group", b =>
                 {
                     b.Navigation("Connections");
+                });
+
+            modelBuilder.Entity("API.Entities.TaskEntity", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

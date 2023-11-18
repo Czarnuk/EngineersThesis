@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="left-panel">
+        <h4>{{task?.taskName}}</h4>
+        <hr>
+        {{task?.description}}
+        <hr>
+        <div class="row" *ngFor="let photo of task?.photos">
+            <p><img style="padding: 0;" src="{{photo.url}}" alt="" class="img-fluid"></p>
+        </div>
+    </div>
+    <div class="right-panel">
+        <div>
+            <ngx-codemirror #codemirror
+            [options]="codeMirrorOptions"
+            [(ngModel)]="query"
+            (ngModelChange)="setEditorContent($event)">
+      </ngx-codemirror>
+        </div>
+        <div class="mt-4" style="text-align: right;">
+            <button type="button" class="btn btn-success">Run code</button>
+        </div>
+    </div>
+</div>
